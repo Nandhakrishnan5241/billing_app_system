@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing Calculation</title>
+    <style>
+        /* Some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        #productsContainer {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .product-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .product-group input {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .product-group button {
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
+        .separator {
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Billing Calculation</h1>
+        <form id="billingForm">
+            <div class="form-group">
+                <label for="customerEmail">Customer Email:</label>
+                <input type="email" id="customerEmail" name="customerEmail" required>
+            </div>
+            <div id="productsContainer">
+                <div class="product-group">
+                    <input type="text" class="productID" name="productID[]" placeholder="Product ID" required>
+                    <input type="number" class="quantity" name="quantity[]" placeholder="Quantity" required>
+                    <button type="button" class="removeProduct">Remove</button>
+                </div>
+            </div>
+            <button type="button" id="addProduct">Add New</button>
+            <div class="separator"></div>
+            <div class="form-group">
+                <label for="amountGiven">Amount Given:</label>
+                <input type="number" id="amountGiven" name="amountGiven" required>
+            </div>
+            <button type="submit">Generate Bill</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addProductButton = document.getElementById('addProduct');
+            const productsContainer = document.getElementById('productsContainer');
+
+            addProductButton.addEventListener('click', function () {
+                const productGroup = document.createElement('div');
+                productGroup.classList.add('product-group');
+                productGroup.innerHTML = `
+                    <input type="text" class="productID" name="productID[]" placeholder="Product ID" required>
+                    <input type="number" class="quantity" name="quantity[]" placeholder="Quantity" required>
+                    <button type="button" class="removeProduct">Remove</button>
+                `;
+                productsContainer.appendChild(productGroup);
+            });
+
+            productsContainer.addEventListener('click', function (event) {
+                if (event.target.classList.contains('removeProduct')) {
+                    event.target.closest('.product-group').remove();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
